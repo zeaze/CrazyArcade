@@ -7,7 +7,7 @@ using namespace std;
 class GameAction
 {
 public:
-	static CCAnimation * CreationRoleRunAction(Vec2 director,const char * name, int iNum, float delay, unsigned int iLoops);
+	static CCAnimation * CreationRoleRunAction(Vec2 direction,const char * name, int iNum, float delay, unsigned int iLoops);
 
 };
 
