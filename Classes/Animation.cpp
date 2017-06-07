@@ -1,4 +1,3 @@
-
 #include "Animation.h"
 
 
