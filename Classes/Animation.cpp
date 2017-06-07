@@ -1,3 +1,4 @@
+
 #include "Animation.h"
 
 
@@ -12,7 +13,8 @@ CCAnimation * GameAction::CreationRoleRunAction(Vec2 direction,const char *name,
 	if (direction == Vec2(1, 0))  k = 18;
 	for (int i = 1; i<Num; i++) {
 		frame = cache->spriteFrameByName(CCString::createWithFormat("%s%d.png", name, k+i)->getCString());
-		if (frame == NULL) {
+		if (frame == NULL) 
+		{
 			break;
 		}
 		framesArray.pushBack(frame);
