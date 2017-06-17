@@ -63,8 +63,7 @@ bool HelloWorld::init()
 			Director::getInstance()->pushScene(pageSlectScene);
 		}
 	});
-	
-	this->addChild(startButton,2);
+	this->addChild(startButton,1);
 
     return true;
 }

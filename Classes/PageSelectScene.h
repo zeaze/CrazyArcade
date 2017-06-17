@@ -17,7 +17,9 @@ public:
 	void touchRole2Event(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 	void touchMap1Event(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 	void touchMap2Event(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
+	void touchMap3Event(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 	void touchStartGameEvent(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
+	void touchReturnEvent(cocos2d::Ref* pSender, cocos2d::ui::Widget::TouchEventType type);
 	CREATE_FUNC(PageSelectScene);
 	PageSelectScene();
 	~PageSelectScene();
