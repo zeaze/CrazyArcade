@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "ui\CocosGUI.h"
 #include "PageSelectScene.h"
+#include "HelpScene.h"
 USING_NS_CC;
 using namespace ui;
 
@@ -64,6 +65,20 @@ bool HelloWorld::init()
 		}
 	});
 	this->addChild(startButton,1);
+	
+	auto helpButton = Button::create("button.png");
+	helpButton->setScale(2);
+	helpButton->setTitleText("HELP");
+	helpButton->setTitleFontSize(16);
+	helpButton->setTitleFontName("Marker Felt.ttf");
+	helpButton->setPosition(Vec2(visibleSize.width*0.835, visibleSize.height*0.62-100));
+	helpButton->addTouchEventListener([](Ref* pSender, Widget::TouchEventType type) {
+		if (type == Widget::TouchEventType::ENDED) {
+			auto helpScene = HelpScene::createScene();
+			Director::getInstance()->pushScene(helpScene);
+		}
+	});
+	this->addChild(helpButton, 1);
 
     return true;
 }
