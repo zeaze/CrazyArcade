@@ -1,5 +1,4 @@
 #include <HelpScene.h>
-#include <HelloWorldScene.h>
 #include "ui\CocosGUI.h"
 #include <iostream>
 #include <fstream>
@@ -40,7 +39,7 @@ void HelpScene::touchReturnEvent(cocos2d::Ref * pSender, cocos2d::ui::Widget::To
 {
 	if (type == Widget::TouchEventType::ENDED) 
 	{
-			Director::getInstance()->pushScene(HelloWorld::createScene());
+			Director::getInstance()->popScene();
 			return;
 	}
 
