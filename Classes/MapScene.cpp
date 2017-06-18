@@ -45,7 +45,7 @@ void MapScene::initRole(string _rolePictureName,string runActionPlistName,string
 		Role::SetReleaseBombNum(0);
 	}
 
-	//ÊîπÂèòRoleÁöÑÊï∞ÂÄº
+	//∏ƒ±‰Roleµƒ ˝÷µ
 }
 
 void MapScene::initKey()
@@ -91,6 +91,10 @@ cocos2d::Scene * MapScene::createScene()
 
 bool MapScene::init()
 {
+	if (!Scene::init())
+	{
+		return false;
+	}
 	srand((unsigned)time(NULL));
 	this->removeAllChildren();
 	initKey();
@@ -274,7 +278,7 @@ void MapScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 		key[29] = true;
 	}
 
-	if (keyCode==EventKeyboard::KeyCode::KEY_SPACE) {   //Á©∫Ê†º
+	if ((int)keyCode == 59) {   
 		if ((Role::GetBombNum()>Role::GetReleaseBombNum())&&(!this->getChildByTag(i * 1000 + j * 10 + 3))) {
 			bomb[i][j] = bombExplosionTime;
 			Map[i][j] = 3;
@@ -342,22 +346,22 @@ bool MapScene::collisionDetectionBelow(int x, int y)
 void MapScene::updateAction1()
 {
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
-	if (director[27] && !role->getActionByTag(11)) {  //Âè≥
+	if (director[27] && !role->getActionByTag(11)) {  //”“
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(Role::GetSpeed(), 0)));
 		move1->setTag(11);
 		role->runAction(move1);
 	}
-	if (director[26] && !role->getActionByTag(21)) {   //Â∑¶
+	if (director[26] && !role->getActionByTag(21)) {   //◊Û
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(-Role::GetSpeed(), 0)));
 		move1->setTag(21);
 		role->runAction(move1);
 	}
-	if (director[29] && !role->getActionByTag(31)) {  //‰∏ã
+	if (director[29] && !role->getActionByTag(31)) {  //œ¬
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(0, -Role::GetSpeed())));
 		move1->setTag(31);
 		role->runAction(move1);
 	}
-	if (director[28] && !role->getActionByTag(41)) {   //‰∏ä
+	if (director[28] && !role->getActionByTag(41)) {   //…œ
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(0, Role::GetSpeed())));
 		move1->setTag(41);
 		role->runAction(move1);
@@ -371,22 +375,22 @@ void MapScene::updateAction1()
 void MapScene::updateAction2()
 {
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
-	if (director2[27] && !role->getActionByTag(12)) {  //Âè≥
+	if (director2[27] && !role->getActionByTag(12)) {  //”“
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(1, 0), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(12);
 		role->runAction(move2);
 	}
-	if (director2[26] && !role->getActionByTag(22)) {   //Â∑¶
+	if (director2[26] && !role->getActionByTag(22)) {   //◊Û
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(-1, 0), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(22);
 		role->runAction(move2);
 	}
-	if (director2[29] && !role->getActionByTag(32)) {  //‰∏ã
+	if (director2[29] && !role->getActionByTag(32)) {  //œ¬
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(0, -1), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(32);
 		role->runAction(move2);
 	}
-	if (director2[28] && !role->getActionByTag(42)) {   //‰∏ä
+	if (director2[28] && !role->getActionByTag(42)) {   //…œ
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(0, 1), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(42);
 		role->runAction(move2);
@@ -426,7 +430,7 @@ void MapScene::updateKey()
 	while (x - unitSize >= 0)x -= unitSize;
 	while (y - unitSize >= 0)y -= unitSize;
 	initDirector();
-	if (key[27]) {  //Âè≥
+	if (key[27]) {  //”“
 		if (!collisionDetectionRight(i, j)) {  
 			director[27] = true;
 			director2[27] = true;
@@ -446,7 +450,7 @@ void MapScene::updateKey()
 		}
 	}
 
-	if (key[26]) {   //Â∑¶
+	if (key[26]) {   //◊Û
 		if (!collisionDetectionLeft(i, j)) {
 			director[26] = true;
 			director2[26] = true;
@@ -464,7 +468,7 @@ void MapScene::updateKey()
 		}
 	}
 	
-	if (key[29]) {  //‰∏ã
+	if (key[29]) {  //œ¬
 		if (!collisionDetectionBelow(i, j)) {
 			director[29] = true;
 			director2[29] = true;
@@ -482,7 +486,7 @@ void MapScene::updateKey()
 		}
 	}
 	
-	if (key[28]) {   //‰∏ä
+	if (key[28]) {   //…œ
 		if (!collisionDetectionAbove(i, j)) {
 			director[28] = true;
 			director2[28] = true;
@@ -534,17 +538,21 @@ void MapScene::updateBombExplode(int x, int y, int power)
 		releasetools(x, y - len_Y - 1);
 	}
 
-	if (Map[x + lenX + 1][y] == 3 && lenX < power) {     //ÂºïÁàÜÁÇ∏Âºπ
-		bomb[x + lenX + 1][y] = 51;
+	if (Map[x + lenX + 1][y] == 3 && lenX < power) {     //“˝±¨’®µØ
+		//if (bomb[x + lenX + 1][y] > 51) 
+			bomb[x + lenX + 1][y] = 51;
 	}
 	if (Map[x - len_X - 1][y] == 3 && len_X < power) {
-		bomb[x - len_X - 1][y] = 51;
+		//if (bomb[x - len_X + 1][y] > 51) 
+			bomb[x - len_X - 1][y] = 51;
 	}
 	if (Map[x][y + lenY + 1] == 3 && lenY < power) {
-		bomb[x][y + lenY + 1] = 51;
+		//if (Map[x][y + lenY + 1] > 51) 
+			bomb[x][y + lenY + 1] = 51;
 	}
 	if (Map[x][y - len_Y - 1] == 3 && len_Y < power) {
-		bomb[x][y - len_Y - 1] = 51;
+		//if (Map[x][y - len_Y + 1] > 51) 
+			bomb[x][y - len_Y - 1] = 51;
 	}
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
 	int i = transformXIntoCoordinateOfMap(role->getPosition().x), j = transformYIntoCoordinateOfMap(role->getPosition().y);

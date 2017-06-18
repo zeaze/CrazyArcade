@@ -18,6 +18,11 @@ void MakeMap::initRole(string _rolePictureName)
 
 bool MakeMap::init()
 {
+	if (!Scene::init())
+	{
+		return false;
+	}
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	auto bg = Sprite::create("PageSelectScene_bg.png");
