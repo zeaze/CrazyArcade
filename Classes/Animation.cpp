@@ -1,6 +1,4 @@
 #include "Animation.h"
-
-
 Action *GameAction::CreationRoleRunAction(Vec2 direction, const char* name, int Num, float delay, unsigned int Loops) {
 	CCSpriteFrameCache * cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	Vector<SpriteFrame*> framesArray;

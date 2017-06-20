@@ -1,4 +1,5 @@
 #include <HelpScene.h>
+#include <HelloWorldScene.h>
 #include "ui\CocosGUI.h"
 #include <iostream>
 #include <fstream>

@@ -1,5 +1,10 @@
 #include "PageSelectScene.h"
 #include "ui\CocosGUI.h"
+#include "Role.h"
+#include "MapScene.h"
+#include "MakeMap.h"
+#include <iostream>
+#include <fstream>
 USING_NS_CC;
 using namespace ui;
 
@@ -14,7 +19,6 @@ bool PageSelectScene::init()
 	{
 		return false;
 	}
-
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -62,10 +66,10 @@ bool PageSelectScene::init()
 	label2->setVisible(false);
 	label2->setTag(21);
 	this->addChild(label2, 1);
-	
+
 	auto map1Picture = Sprite::create("map1.png");
 	map1Picture->setPosition(Vec2(visibleSize.width * 0.3, visibleSize.height * 0.5));
-	map1Picture->setScale(0.23);
+	map1Picture->setScale(0.21);
 	map1Picture->setVisible(false);
 	map1Picture->setTag(22);
 	this->addChild(map1Picture, 1);
@@ -82,7 +86,7 @@ bool PageSelectScene::init()
 
 	auto map2Picture = Sprite::create("map2.png");
 	map2Picture->setPosition(Vec2(visibleSize.width * 0.45, visibleSize.height * 0.5));
-	map2Picture->setScale(0.23);
+	map2Picture->setScale(0.21);
 	map2Picture->setVisible(false);
 	map2Picture->setTag(24);
 	this->addChild(map2Picture, 1);
@@ -97,6 +101,23 @@ bool PageSelectScene::init()
 	map2->setTag(25);
 	this->addChild(map2, 1);
 
+	auto map3Picture = Sprite::create("map3.png");
+	map3Picture->setPosition(Vec2(visibleSize.width * 0.60, visibleSize.height * 0.5));
+	map3Picture->setScale(0.23);
+	map3Picture->setVisible(false);
+	map3Picture->setTag(26);
+	this->addChild(map3Picture, 1);
+	auto map3 = Button::create("button.png");
+	map3->setScale(1);
+	map3->setTitleText("OK");
+	map3->setTitleFontSize(16);
+	map3->setTitleFontName("Marker Felt.ttf");
+	map3->setPosition(Vec2(visibleSize.width*0.60, visibleSize.height*0.38));
+	map3->addTouchEventListener(CC_CALLBACK_2(PageSelectScene::touchMap3Event, this));
+	map3->setVisible(false);
+	map3->setTag(27);
+	this->addChild(map3, 1);
+
 	auto startGame = Button::create("button.png");
 	startGame->setScale(2);
 	startGame->setTitleText("START");
@@ -108,52 +129,151 @@ bool PageSelectScene::init()
 	startGame->setVisible(false);
 	this->addChild(startGame, 1);
 
+	auto returnButton = Button::create("button.png");
+	returnButton->setScale(1);
+	returnButton->setTitleText("RETURN");
+	returnButton->setTitleFontSize(16);
+	returnButton->setTitleFontName("Marker Felt.ttf");
+	returnButton->setPosition(Vec2(visibleSize.width*0.9, visibleSize.height*0.1));
+	returnButton->addTouchEventListener(CC_CALLBACK_2(PageSelectScene::touchReturnEvent, this));
+	this->addChild(returnButton, 1);
+
 	return true;
 }
 
 void PageSelectScene::touchRole1Event(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 {
-	this->getChildByTag(21)->setVisible(true);
-	this->getChildByTag(22)->setVisible(true);
-	this->getChildByTag(23)->setVisible(true);
-	this->getChildByTag(24)->setVisible(true);
-	this->getChildByTag(25)->setVisible(true);
-	this->getChildByTag(13)->setVisible(false);
-	this->getChildByTag(14)->setVisible(false);
-
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(21)->setVisible(true);
+		this->getChildByTag(22)->setVisible(true);
+		this->getChildByTag(23)->setVisible(true);
+		this->getChildByTag(24)->setVisible(true);
+		this->getChildByTag(25)->setVisible(true);
+		this->getChildByTag(26)->setVisible(true);
+		this->getChildByTag(27)->setVisible(true);
+		this->getChildByTag(13)->setVisible(false);
+		this->getChildByTag(14)->setVisible(false);
+		MapScene::initRole("Role1.png", "Role1Run.plist", "Role1Run.png", "Role1RunAction_");
+		MakeMap::initRole("Role1.png");
+	}
 }
 
 void PageSelectScene::touchRole2Event(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 {
-	this->getChildByTag(21)->setVisible(true);
-	this->getChildByTag(22)->setVisible(true);
-	this->getChildByTag(23)->setVisible(true);
-	this->getChildByTag(24)->setVisible(true);
-	this->getChildByTag(25)->setVisible(true);
-	this->getChildByTag(11)->setVisible(false);
-	this->getChildByTag(12)->setVisible(false);
-
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(21)->setVisible(true);
+		this->getChildByTag(22)->setVisible(true);
+		this->getChildByTag(23)->setVisible(true);
+		this->getChildByTag(24)->setVisible(true);
+		this->getChildByTag(25)->setVisible(true);
+		this->getChildByTag(26)->setVisible(true);
+		this->getChildByTag(27)->setVisible(true);
+		this->getChildByTag(11)->setVisible(false);
+		this->getChildByTag(12)->setVisible(false);
+		MapScene::initRole("Role2.png", "Role2Run.plist", "Role2Run.png", "Role2RunAction_");
+		MakeMap::initRole("Role2.png");
+	}
 }
 
 void PageSelectScene::touchMap1Event(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 {
-	this->getChildByTag(24)->setVisible(false);
-	this->getChildByTag(25)->setVisible(false);
-	this->getChildByTag(31)->setVisible(true);
-
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(24)->setVisible(false);
+		this->getChildByTag(25)->setVisible(false);
+		this->getChildByTag(26)->setVisible(false);
+		this->getChildByTag(27)->setVisible(false);
+		this->getChildByTag(31)->setVisible(true);
+		MapScene::initMap("map1.txt");
+	}
 }
 
 void PageSelectScene::touchMap2Event(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 {
-	this->getChildByTag(22)->setVisible(false);
-	this->getChildByTag(23)->setVisible(false);
-	this->getChildByTag(31)->setVisible(true);
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(22)->setVisible(false);
+		this->getChildByTag(23)->setVisible(false);
+		this->getChildByTag(26)->setVisible(false);
+		this->getChildByTag(27)->setVisible(false);
+		this->getChildByTag(31)->setVisible(true);
+		MapScene::initMap("map2.txt");
+	}
+}
 
+void PageSelectScene::touchMap3Event(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
+{
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(11)->setVisible(true);
+		this->getChildByTag(12)->setVisible(true);
+		this->getChildByTag(13)->setVisible(true);
+		this->getChildByTag(14)->setVisible(true);
+		this->getChildByTag(21)->setVisible(false);
+		this->getChildByTag(22)->setVisible(false);
+		this->getChildByTag(23)->setVisible(false);
+		this->getChildByTag(24)->setVisible(false);
+		this->getChildByTag(25)->setVisible(false);
+		this->getChildByTag(26)->setVisible(false);
+		this->getChildByTag(27)->setVisible(false);
+		this->getChildByTag(31)->setVisible(false);
+		MapScene::initMap("map3.txt");
+		auto makeMap = MakeMap::createScene();
+		Director::getInstance()->pushScene(makeMap);
+	}
 }
 
 void PageSelectScene::touchStartGameEvent(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
 {
-	CCLOG("tan270");
+	if (type == Widget::TouchEventType::ENDED) {
+		this->getChildByTag(11)->setVisible(true);
+		this->getChildByTag(12)->setVisible(true);
+		this->getChildByTag(13)->setVisible(true);
+		this->getChildByTag(14)->setVisible(true);
+		this->getChildByTag(21)->setVisible(false);
+		this->getChildByTag(22)->setVisible(false);
+		this->getChildByTag(23)->setVisible(false);
+		this->getChildByTag(24)->setVisible(false);
+		this->getChildByTag(25)->setVisible(false);
+		this->getChildByTag(26)->setVisible(false);
+		this->getChildByTag(27)->setVisible(false);
+		this->getChildByTag(31)->setVisible(false);
+		auto mapScene = MapScene::createScene();
+		Director::getInstance()->pushScene(mapScene);
+	}
+}
+
+void PageSelectScene::touchReturnEvent(cocos2d::Ref * pSender, cocos2d::ui::Widget::TouchEventType type)
+{
+	if (type == Widget::TouchEventType::ENDED) {
+		if (this->getChildByTag(11)->isVisible() && this->getChildByTag(13)->isVisible()) {
+			Director::getInstance()->popScene();
+			return;
+		}
+		if (this->getChildByTag(22)->isVisible() && this->getChildByTag(24)->isVisible()) {
+			this->getChildByTag(11)->setVisible(true);
+			this->getChildByTag(12)->setVisible(true);
+			this->getChildByTag(13)->setVisible(true);
+			this->getChildByTag(14)->setVisible(true);
+			this->getChildByTag(21)->setVisible(false);
+			this->getChildByTag(22)->setVisible(false);
+			this->getChildByTag(23)->setVisible(false);
+			this->getChildByTag(24)->setVisible(false);
+			this->getChildByTag(25)->setVisible(false);
+			this->getChildByTag(26)->setVisible(false);
+			this->getChildByTag(27)->setVisible(false);
+			return;
+		}
+		if (this->getChildByTag(31)->isVisible()) {
+			this->getChildByTag(21)->setVisible(true);
+			this->getChildByTag(22)->setVisible(true);
+			this->getChildByTag(23)->setVisible(true);
+			this->getChildByTag(24)->setVisible(true);
+			this->getChildByTag(25)->setVisible(true);
+			this->getChildByTag(26)->setVisible(true);
+			this->getChildByTag(27)->setVisible(true);
+			this->getChildByTag(31)->setVisible(false);
+			return;
+		}
+	}
+
 }
 
 PageSelectScene::PageSelectScene()
