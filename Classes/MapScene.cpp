@@ -46,7 +46,7 @@ void MapScene::initRole(string _rolePictureName,string runActionPlistName,string
 		Role::SetReleaseBombNum(0);
 	}
 
-	//∏ƒ±‰Roleµƒ ˝÷µ
+	//ÊîπÂèòRoleÁöÑÊï∞ÂÄº
 }
 
 void MapScene::initKey()
@@ -348,22 +348,22 @@ bool MapScene::collisionDetectionBelow(int x, int y)
 void MapScene::updateAction1()
 {
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
-	if (director[27] && !role->getActionByTag(11)) {  //”“
+	if (director[27] && !role->getActionByTag(11)) {  //Âè≥
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(Role::GetSpeed(), 0)));
 		move1->setTag(11);
 		role->runAction(move1);
 	}
-	if (director[26] && !role->getActionByTag(21)) {   //◊Û
+	if (director[26] && !role->getActionByTag(21)) {   //Â∑¶
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(-Role::GetSpeed(), 0)));
 		move1->setTag(21);
 		role->runAction(move1);
 	}
-	if (director[29] && !role->getActionByTag(31)) {  //œ¬
+	if (director[29] && !role->getActionByTag(31)) {  //‰∏ã
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(0, -Role::GetSpeed())));
 		move1->setTag(31);
 		role->runAction(move1);
 	}
-	if (director[28] && !role->getActionByTag(41)) {   //…œ
+	if (director[28] && !role->getActionByTag(41)) {   //‰∏ä
 		auto move1 = RepeatForever::create(MoveBy::create(0.1, Point(0, Role::GetSpeed())));
 		move1->setTag(41);
 		role->runAction(move1);
@@ -377,22 +377,22 @@ void MapScene::updateAction1()
 void MapScene::updateAction2()
 {
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
-	if (director2[27] && !role->getActionByTag(12)) {  //”“
+	if (director2[27] && !role->getActionByTag(12)) {  //Âè≥
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(1, 0), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(12);
 		role->runAction(move2);
 	}
-	if (director2[26] && !role->getActionByTag(22)) {   //◊Û
+	if (director2[26] && !role->getActionByTag(22)) {   //Â∑¶
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(-1, 0), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(22);
 		role->runAction(move2);
 	}
-	if (director2[29] && !role->getActionByTag(32)) {  //œ¬
+	if (director2[29] && !role->getActionByTag(32)) {  //‰∏ã
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(0, -1), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(32);
 		role->runAction(move2);
 	}
-	if (director2[28] && !role->getActionByTag(42)) {   //…œ
+	if (director2[28] && !role->getActionByTag(42)) {   //‰∏ä
 		auto move2 = GameAction::CreationRoleRunAction(Vec2(0, 1), RoleRunAction_, 7, 0.1f, -1);
 		move2->setTag(42);
 		role->runAction(move2);
@@ -409,7 +409,7 @@ void MapScene::updateBomb()
 	for (int i = 0; i < 17; i++)
 		for (int j = 0; j < 15; j++) {
 			bomb[i][j]--;
-			if (bomb[i][j] == 50) {
+			if (bomb[i][j] == 30) {
 				isBombExplode[i][j] = true;
 				this->getChildByTag(i * 1000 + j * 10 + 3)->runAction(GameAction::createAnimate2());
 				updateBombExplodeAction(i, j, Role::GetPower());
@@ -433,7 +433,7 @@ void MapScene::updateKey()
 	while (x - unitSize >= 0)x -= unitSize;
 	while (y - unitSize >= 0)y -= unitSize;
 	initDirector();
-	if (key[27]) {  //”“
+	if (key[27]) {  //Âè≥
 		if (!collisionDetectionRight(i, j)) {  
 			director[27] = true;
 			director2[27] = true;
@@ -453,7 +453,7 @@ void MapScene::updateKey()
 		}
 	}
 
-	if (key[26]) {   //◊Û
+	if (key[26]) {   //Â∑¶
 		if (!collisionDetectionLeft(i, j)) {
 			director[26] = true;
 			director2[26] = true;
@@ -471,7 +471,7 @@ void MapScene::updateKey()
 		}
 	}
 	
-	if (key[29]) {  //œ¬
+	if (key[29]) {  //‰∏ã
 		if (!collisionDetectionBelow(i, j)) {
 			director[29] = true;
 			director2[29] = true;
@@ -489,7 +489,7 @@ void MapScene::updateKey()
 		}
 	}
 	
-	if (key[28]) {   //…œ
+	if (key[28]) {   //‰∏ä
 		if (!collisionDetectionAbove(i, j)) {
 			director[28] = true;
 			director2[28] = true;
@@ -541,17 +541,17 @@ void MapScene::updateBombExplode(int x, int y, int power)
 		releasetools(x, y - len_Y - 1);
 	}
 	
-	if (Map[x + lenX + 1][y] == 3 && lenX < power && !isBombExplode[x + lenX + 1][y]) {     //“˝±¨’®µØ
-		bomb[x + lenX + 1][y] = 51;
+	if (Map[x + lenX + 1][y] == 3 && lenX < power && !isBombExplode[x + lenX + 1][y]) {     //ÂºïÁàÜÁÇ∏Âºπ
+		bomb[x + lenX + 1][y] = 31;
 	}
 	if (Map[x - len_X - 1][y] == 3 && len_X < power && !isBombExplode[x - len_X - 1][y]){
-		bomb[x - len_X - 1][y] = 51;
+		bomb[x - len_X - 1][y] = 31;
 	}
 	if (Map[x][y + lenY + 1] == 3 && lenY < power && !isBombExplode[x][y + lenY + 1]) {
-		bomb[x][y + lenY + 1] = 51;
+		bomb[x][y + lenY + 1] = 31;
 	}
 	if (Map[x][y - len_Y - 1] == 3 && len_Y < power && !isBombExplode[x][y - len_Y - 1]) {
-		bomb[x][y - len_Y - 1] = 51;
+		bomb[x][y - len_Y - 1] = 31;
 	}
 	auto role = ((Sprite*)this->getChildByTag(roleTag));
 	int i = transformXIntoCoordinateOfMap(role->getPosition().x), j = transformYIntoCoordinateOfMap(role->getPosition().y);
@@ -583,25 +583,25 @@ void MapScene::updateBombExplode(int x, int y, int power)
 void MapScene::updateBombExplodeAction(int x, int y, int power)
 {
 	int lenX = 0, len_X = 0, lenY = 0, len_Y = 0;
-	while ((Map[x + lenX + 1][y] <= 0 || (Map[x + lenX + 1][y] == 3 && bomb[x + lenX + 1][y] <50)) && lenX < power) {
+	while ((Map[x + lenX + 1][y] <= 0 || (Map[x + lenX + 1][y] == 3 && bomb[x + lenX + 1][y] <30)) && lenX < power) {
 		lenX++;
 		this->getChildByTag((x + lenX) * 10000 + y * 100 + 1)->stopAllActions();
 		this->getChildByTag((x + lenX) * 10000 + y * 100 + 1)->setVisible(false);
 		this->getChildByTag((x + lenX) * 10000 + y * 100 + 1)->runAction(Blink::create(0.5, 1));
 	}
-	while ((Map[x - len_X - 1][y] <= 0 || (Map[x - len_X - 1][y] == 3 && bomb[x - len_X - 1][y] <50)) && len_X < power) {
+	while ((Map[x - len_X - 1][y] <= 0 || (Map[x - len_X - 1][y] == 3 && bomb[x - len_X - 1][y] <30)) && len_X < power) {
 		len_X++;
 		this->getChildByTag((x - len_X) * 10000 + y * 100 + 2)->stopAllActions();
 		this->getChildByTag((x - len_X) * 10000 + y * 100 + 2)->setVisible(false);
 		this->getChildByTag((x - len_X) * 10000 + y * 100 + 2)->runAction(Blink::create(0.5, 1));
 	}
-	while ((Map[x][y + lenY + 1] <= 0 || (Map[x][y + lenY + 1] == 3 && bomb[x][y + lenY + 1] <50)) && lenY < power) {
+	while ((Map[x][y + lenY + 1] <= 0 || (Map[x][y + lenY + 1] == 3 && bomb[x][y + lenY + 1] <30)) && lenY < power) {
 		lenY++;
 		this->getChildByTag(x * 10000 + (y + lenY) * 100 + 3)->stopAllActions();
 		this->getChildByTag(x * 10000 + (y + lenY) * 100 + 3)->setVisible(false);
 		this->getChildByTag(x * 10000 + (y + lenY) * 100 + 3)->runAction(Blink::create(0.5, 1));
 	}
-	while ((Map[x][y - len_Y - 1] <= 0 || (Map[x][y - len_Y - 1] == 3 && bomb[x][y - len_Y - 1] <50)) && len_Y < power) {
+	while ((Map[x][y - len_Y - 1] <= 0 || (Map[x][y - len_Y - 1] == 3 && bomb[x][y - len_Y - 1] <30)) && len_Y < power) {
 		len_Y++;
 		this->getChildByTag(x * 10000 + (y - len_Y) * 100 + 4)->stopAllActions();
 		this->getChildByTag(x * 10000 + (y - len_Y) * 100 + 4)->setVisible(false);
